@@ -25,7 +25,7 @@ public class IndexController {
 		//뷰리졸버설정 생략가능
 		return "index";
 	}
-	
+	@ResponseBody
 	@GetMapping("/user")
 	public String user() {
 	

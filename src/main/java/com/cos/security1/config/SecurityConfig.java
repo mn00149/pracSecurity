@@ -27,7 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().permitAll()//위의 설정 이외엔 다허용, 권한이 없는 페이지에 접근시 403이 뜬다
 			.and()//밑의 설정을 통해 권한없는 페이지 접근시 로그인 페이지로 이동
 			.formLogin()
-			.loginPage("/loginForm");
+			.loginPage("/loginForm")
+			.loginProcessingUrl("/login")//login주소가 호출이 되면 시큐리티가 낚아채서 로그인을 진행 => 즉 따로 로그인처리하는 controller를 만들 필요 없다
+			.defaultSuccessUrl("/");
 	}
 
 	
