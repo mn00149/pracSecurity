@@ -1,26 +1,47 @@
 package com.cos.security1.model;
 
 import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // ORM - Object Relation Mapping
 
 @Data
 @Entity
+@NoArgsConstructor
 public class User {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String provider;
+	private String providerId;
 	private String username;
 	private String password;
 	private String email;
 	private String role; //ROLE_USER, ROLE_ADMIN
 	@CreationTimestamp//자동으로 시간 찍어서 등록해줌
 	private Timestamp createDate;
+	@Builder 
+  public User(String provider, String providerId, String username, String password, String email, String role,
+      Timestamp createDate) {
+  
+    this.provider = provider;
+    this.providerId = providerId;
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.role = role;
+    this.createDate = createDate;
+  }
+	
+	
 }

@@ -2,11 +2,15 @@ package com.cos.security1.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.cos.security1.model.User;
+
+import lombok.Data;
 
 //시큐리티가 /login 주소 요청이오면 낚아체서 로그인을 진행
 //로그인 진행이 완료되면 시큐리티 session을 만듬(Security ContextHolder)
@@ -14,12 +18,22 @@ import com.cos.security1.model.User;
 //User 오브젝트 타입 => UserDetails 타입객체
 
 //Security Session => Authentication => UserDetails(PrincipalDetails) 
-public class PrincipalDetails implements UserDetails{
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User{
   
   private User user;//콤포지션
-  
+  private Map<String, Object> attributes;
+  //일반 로그인
   public PrincipalDetails(User user) {
     this.user = user;
+  }
+  
+  //Oauth 로그인
+  public PrincipalDetails(User user, Map<String, Object> attributes) {
+    
+    this.user = user;
+    this.attributes = attributes;
+    
   }
   //해당유저의 권한을 리턴
   @Override
@@ -35,7 +49,7 @@ public class PrincipalDetails implements UserDetails{
     });
     return collect;
   }
-
+  
   @Override
   public String getPassword() {
     // TODO Auto-generated method stub
@@ -71,6 +85,18 @@ public class PrincipalDetails implements UserDetails{
     // 우리사이트에서 회원이 1년동안 로그인이 안되었다면 휴면계정으로 쓸때
     //현제시간 - 로그인시간 > 1년 => false반환 
     return true;
+  }
+  
+  @Override
+  public Map<String, Object> getAttributes() {
+    // TODO Auto-generated method stub
+    return attributes;
+  }
+  
+  @Override
+  public String getName() {
+    // TODO Auto-generated method stub
+    return null;
   }
  
 }

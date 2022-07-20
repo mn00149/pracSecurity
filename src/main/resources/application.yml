@@ -13,7 +13,8 @@ spring:
     url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
     username: javauser
     password: 1234
-    
+  main:
+    allow-circular-references: true
 
 
   jpa:
@@ -22,4 +23,18 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+    
+    
+  security:
+    oauth2:
+      client:
+        registration:
+         google:
+          client-id: 488693894395-i0d0eimnk3qul96pihgcbr9adf0k5rne.apps.googleusercontent.com
+          client-secret: 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
+          scope:
+          - email
+          - profile
+            
+             
 
